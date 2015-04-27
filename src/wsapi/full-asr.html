@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <title>ROS WebSpeech API</title>
+    <style type="text/css" media="all">
+      body {
+        background-color:inherit;
+        color:inherit;
+        font-family:inherit;
+        font-size:inherit;
+      }
+      .left { float:left; }
+      .right { float:right; }
+      .content { width:300px; height:300px; }
+      .result {
+        min-height:250px;
+        text-align:left;
+        border-bottom:1px solid #ddd;
+      }
+      .buttons { padding:0px; }
+      .info { color:#b40404; padding:5px 2px 5px 5px; }
+      .interim { color:gray; }
+      .final { color:inherit; }
+      .start-button {
+        display:inline-block;
+        border:0;
+        background-color:transparent;
+        padding:0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <div class="result">
+        <span id="final_span" class="final"></span>
+        <span id="interim_span" class="interim"></span>
+      </div>
+      <div id="dbg_span" class="info left"></div>
+      <div class="buttons right">
+        <button class="start-button" onclick="toggleStartStop()">
+          <img id="mic_img" src="mic.gif" alt="Toggle Start/Stop"/>
+        </button>
+      <div>
+    </div>
+    <script type="text/javascript">
+      var ROS_BRIDGE_URI = 'ws://localhost:9090'
+    </script>
+    <script type="text/javascript"
+      src="//cdn.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
+    <script type="text/javascript"
+        src="//cdn.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
+    <script type="text/javascript" src="roswsapi.js"></script>
+  </body>
+</html>

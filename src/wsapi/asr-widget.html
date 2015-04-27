@@ -1,0 +1,35 @@
+<style type="text/css" media="all">
+  .asr-content {
+    background-color:inherit;
+    color:inherit;
+    font-family:inherit;
+    font-size:inherit;
+    width:300px;
+    height:300px;
+  }
+  .left { float:left; }
+  .right { float:right; }
+  .result { height:250px; text-align:left; position:absolute; bottom:50px; }
+  .buttons { padding-right:2px; position:absolute; bottom:0px; right:0px; }
+  .dbg { color:#b40404; padding:5px 2px 5px 5px; position:absolute; bottom:0px; }
+  .interim { color:gray; width:250px; position:absolute; bottom:0px; }
+  .final { color:inherit; width:250px; position:absolute; bottom:0px; }
+  .start-button {
+    display:inline-block;
+    border:0;
+    background-color:transparent;
+    padding:0;
+  }
+</style>
+<div class="asr-content">
+  <div class="result">
+    <span id="final_span" class="final"></span>
+    <span id="interim_span" class="interim"></span>
+  </div>
+  <div id="dbg_span" class="dbg left"></div>
+  <div class="buttons right">
+    <button class="start-button" onclick="toggleStartStop()">
+      <img id="mic_img" src="mic.gif" alt="Toggle Start/Stop"/>
+    </button>
+  <div>
+</div>
