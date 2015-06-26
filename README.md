@@ -14,7 +14,7 @@ Requirements
 ------------
 + python (>= 2.7)
 + PyAudio (>= 0.2.7)
-+ audiotools ()
++ flac
 
 
 Usage

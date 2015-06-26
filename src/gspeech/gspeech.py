@@ -9,6 +9,7 @@ import rospy
 from std_msgs.msg import Bool
 from std_msgs.msg import Int8
 from std_msgs.msg import String
+from gspeech.msg import Speech
 
 
 class GSpeech(object):
@@ -53,6 +54,7 @@ class GSpeech(object):
         self.pub_transcript = rospy.Publisher('~transcript', String, queue_size=1)
         self.pub_confidence = rospy.Publisher('~confidence', Int8, queue_size=1)
         self.pub_recognising = rospy.Publisher('~recognising', Bool, queue_size=1)
+        self.pub_speech = rospy.Publisher('~speech', Speech, queue_size=1)
         self.sub_start = rospy.Subscriber('~start', Bool, self.start_callback)
         self.sub_stop = rospy.Subscriber('~stop', Bool, self.stop_callback)
         # run speech recognition
@@ -115,9 +117,10 @@ class GSpeech(object):
                 self.pub_confidence.publish(confidence)
                 rospy.loginfo("confidence: {}".format(confidence))
             if 'transcript' in a['alternative'][0]:
-                data = a['alternative'][0]['transcript']
-                self.pub_transcript.publish(String(data))
+                transcript = a['alternative'][0]['transcript']
+                self.pub_transcript.publish(String(transcript))
                 rospy.loginfo("transcript: {}".format(data))
+            self.pub_speech.publish(Speech(transcript, confidence))
 
         self.recognising = False
         self.pub_recognising.publish(Bool(self.recognising))
