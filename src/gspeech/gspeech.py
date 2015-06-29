@@ -51,10 +51,11 @@ class GSpeech(object):
         rospy.init_node('gspeech', log_level=rospy.DEBUG)
         # configure ROS settings
         rospy.on_shutdown(self.shutdown)
-        self.pub_transcript = rospy.Publisher('~transcript', String, queue_size=1)
         self.pub_confidence = rospy.Publisher('~confidence', Int8, queue_size=1)
+        self.pub_jsonstr = rospy.Publisher('~jsonstr', String, queue_size=1)
         self.pub_recognising = rospy.Publisher('~recognising', Bool, queue_size=1)
         self.pub_speech = rospy.Publisher('~speech', Speech, queue_size=1)
+        self.pub_transcript = rospy.Publisher('~transcript', String, queue_size=1)
         self.sub_start = rospy.Subscriber('~start', Bool, self.start_callback)
         self.sub_stop = rospy.Subscriber('~stop', Bool, self.stop_callback)
         # run speech recognition
@@ -111,6 +112,8 @@ class GSpeech(object):
         if not wget_err and len(wget_out) > 16:
             wget_out = wget_out.split('\n', 1)[1]
             a = json.loads(wget_out)['result'][0]
+            transcript = ""
+            confidence = 0
             if 'confidence' in a['alternative'][0]:
                 confidence = a['alternative'][0]['confidence']
                 confidence = confidence * 100
@@ -120,7 +123,10 @@ class GSpeech(object):
                 transcript = a['alternative'][0]['transcript']
                 self.pub_transcript.publish(String(transcript))
                 rospy.loginfo("transcript: {}".format(data))
-            self.pub_speech.publish(Speech(transcript, confidence))
+            self.pub_speech.publish(
+                Speech(transcript=transcript, confidence=confidence)
+            )
+            self.pub_jsonstr.publish(String(wget_out))
 
         self.recognising = False
         self.pub_recognising.publish(Bool(self.recognising))
